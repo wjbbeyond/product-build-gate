@@ -1,6 +1,6 @@
 interface:
   display_name: "Product Build Gate"
   short_description: "以原型、设计锁和垂直切片验证产品意图后再批准进入真实开发"
-  default_prompt: "Use $product-build-gate to turn this product proposal into an approved, testable build baseline before full implementation."
+  default_prompt: "Use $product-build-gate to guide this product proposal through a short modify, confirm, or pause menu at every gate before full implementation."
 policy:
   allow_implicit_invocation: false

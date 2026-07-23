@@ -36,7 +36,9 @@ Start a new Codex conversation after installation so the Skill list is refreshed
 
 ## Invoke
 
-Product Build Gate is explicit-only. Call it by exact name for a genuinely new user-facing product or a major product/UX redesign:
+Product Build Gate is explicit-only. You only need to remember the first invocation. After that, Codex guides every transition with a short menu.
+
+Call it by exact name for a genuinely new user-facing product or a major product/UX redesign:
 
 ```text
 $product-build-gate
@@ -58,11 +60,18 @@ $product-build-gate
 请启动 Product Build Gate，先完成 Product Contract，等待我确认后再继续。
 ```
 
-After reviewing Gate 0:
+At the end of every Gate, Codex asks:
 
 ```text
-我批准 Product Contract，请继续 Gate 1。
+请选择：
+1. 修改当前内容
+2. 确认当前 Gate，并进入下一步
+3. 暂停并保存进度
+
+可直接回复数字，也可以直接写修改意见。
 ```
+
+Reply `1` with feedback, `2` to approve the named Gate and continue, or `3` to pause. At the visual-prototype Gate, reply with the selected direction as well, for example `2，选择 B`.
 
 Do not invoke this Skill for routine feature work, bug fixes, status checks, provider selection, implementation continuation, headless services, libraries, or pure CLI tools.
 

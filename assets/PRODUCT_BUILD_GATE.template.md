@@ -15,6 +15,21 @@ This document is the product decision record. It is not a general task log.
 - Verification evidence:
 - User decision required:
 
+## Guided next action
+
+Codex must end the current Gate with:
+
+```text
+请选择：
+1. 修改当前内容
+2. 确认当前 Gate，并进入下一步
+3. 暂停并保存进度
+
+可直接回复数字，也可以直接写修改意见。
+```
+
+For Gate 3, option 2 must also name the selected direction: A, B, or C. A reply of `2` approves only the named Gate shown with this menu. An unclear reply is not approval.
+
 <!-- GATE:product-contract:START -->
 ## Gate 0 — Product Contract
 

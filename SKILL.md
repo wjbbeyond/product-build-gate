@@ -33,6 +33,7 @@ Use this workflow only when the product has a user interface. Handle headless se
 - Present exactly three genuinely different, directly comparable visual directions using the same core content, anchor journey, viewport, and required states.
 - Verify real rendered prototypes in a browser or simulator; source inspection alone is not acceptance.
 - Require explicit user approval at Product Contract, Design Lock, and Vertical Slice/Approved Baseline.
+- Do not require the user to remember Gate names, approval phrases, scripts, or workflow commands. Prompt the next decision.
 - Allow feedback at any gate. Reopen only the gates affected by a material change.
 - Use native Codex as the default owner. Add specialist Skills only when they provide concrete stage-specific value.
 - Use at most one primary Skill and two specialist Skills in a stage; count transitive dependencies.
@@ -44,6 +45,30 @@ Use this workflow only when the product has a user interface. Handle headless se
 ## Run the gates
 
 Maintain decisions and checklist state in `docs/PRODUCT_BUILD_GATE.md`. End every gate update with four short fields: current gate, produced artifact, verification evidence, and user decision required.
+
+## Prompt every transition
+
+Use guided mode by default. At the end of every Gate, summarize the decision and evidence, then show:
+
+```text
+请选择：
+1. 修改当前内容
+2. 确认当前 Gate，并进入下一步
+3. 暂停并保存进度
+
+可直接回复数字，也可以直接写修改意见。
+```
+
+Apply the response as follows:
+
+- `1` or any concrete feedback: stay in the current Gate, apply the feedback, reverify affected evidence, and show the menu again.
+- `2`: treat it as explicit approval only for the named Gate shown immediately above the menu; record the approval and enter the next Gate.
+- `3`: persist the current artifact and give one short resume prompt. Do not advance.
+- An unclear response: restate the current Gate and show the menu again. Never infer approval.
+
+For Gate 3, change option 2 to `确认视觉方向并进入 Design Lock（请附 A/B/C）`. If the user has not selected a direction, ask for the selection instead of advancing. For Gate 7, option 2 means approving the current Approved Build Baseline and exiting Product Build Gate.
+
+Do not end a Gate with an open-ended request such as “tell me what to do next.” The user should only need to choose, modify, or pause.
 
 ### Gate 0 — Product Contract
 
