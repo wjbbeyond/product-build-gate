@@ -1,6 +1,6 @@
 # Capability selection policy
 
-Product Build Gate selects assistance for a stage; it does not route every task or keep specialist Skills permanently active.
+Product Build Gate selects assistance only for pre-build confirmation; it does not route implementation tasks or keep specialist Skills permanently active.
 
 ## Selection order
 
@@ -20,11 +20,12 @@ Record:
 
 Verify exact names and availability at runtime; these are patterns, not mandatory bundles.
 
-- Prior Art: browser/web research and GitHub inspection only when evidence is needed.
-- Visual Prototype: one Product Design owner; optionally one visual-generation or Figma specialist; one browser/simulator verifier.
+- Prior Art: browser/web research and GitHub inspection only when a named material evidence gap exists.
+- System Map and Preview: native Codex by default for extraction and local prototype implementation; optionally one UI/product specialist; one browser/simulator verifier. External design tools may help with selected screens but cannot replace the system map or page coverage.
+- Visual target: one Product Design owner; optionally one visual-generation or Figma specialist; one browser/simulator verifier. If the user already supplied a clear target, validate one faithful direction instead of creating artificial alternatives.
 - Design Lock: Product Design audit plus the relevant platform UI specialist if it adds concrete constraints.
 - Build Blueprint: one platform specialist for Web, iOS, or game architecture; add database, payments, or AI specialists only when they are in the approved scope.
-- Vertical Slice: the relevant platform builder/debugger plus browser or simulator verification.
+- Build handoff: record the relevant platform builder/debugger and browser/simulator verifier as advisory implementation capabilities. Native Codex selects and invokes them only after Product Build Gate exits.
 
 ## Hard limits
 
@@ -32,7 +33,7 @@ Verify exact names and availability at runtime; these are patterns, not mandator
 - One design owner per visual output. Do not combine several opinionated design systems and average their results.
 - Do not preload the initial LeanSkill shortlist or treat it as a whitelist.
 - Do not install from popularity, star count, or a social-media claim alone.
-- Do not keep a planning Skill active during ordinary implementation.
+- Product Build Gate must exit before ordinary implementation.
 
 ## Candidate evaluation
 
@@ -59,4 +60,3 @@ Reject or isolate:
 - Skills that replace user approval with a score.
 - Skills that claim completion from tests without a real rendered journey.
 - Skills that require unapproved accounts, keys, paid calls, external writes, or production data.
-

@@ -1,66 +1,95 @@
 ---
-approved_build_baseline_version: 1
+approved_build_baseline_version: 2
+baseline_status: draft
 project_title: "{{PROJECT_TITLE}}"
 created_at: "{{CREATED_AT}}"
 ---
 
 # Approved Build Baseline — {{PROJECT_TITLE}}
 
-## Product contract
+This document is the single pre-build handoff. After approval, Product Build Gate exits and native Codex implements against this contract.
+
+## Locked product
 
 - Primary user and context:
 - Problem and observable value:
-- Anchor journey:
 - Scope:
 - Out of scope:
+- Main business journey:
 
-## Approved experience
+## Locked experience
 
-- Journey and state-map reference:
-- User-visible success:
+- Experience Map:
+- System Map:
+- Stable page IDs and responsibilities:
+- Whole-product preview:
+- Real user entry:
+- Visible success:
 - Persistence:
 - Failure recovery:
+- Permissions and protected actions:
 
-## Approved design
+## Locked design
 
 - Design Lock: `docs/DESIGN_LOCK.md`
-- Approved prototype/screenshots:
+- Approved references/screenshots:
 - Non-negotiable visual and interaction constraints:
 
-## Build blueprint
+## Build Blueprint
 
+- Blueprint reference/version/hash:
 - Stack and architecture:
-- Reuse/adopt/build decisions:
+- Reuse/adopt/build:
 - Data and integrations:
-- Privacy/security/cost boundaries:
+- Privacy/security/Secret/cost boundaries:
+- Real versus Mock/Fake boundaries:
 - Ordered implementation plan:
 
-## Vertical-slice evidence
+## Implementation traceability
 
-- Browser/simulator evidence:
-- Entry/action/result:
-- Persistence:
-- Failure recovery:
-- Local/Mock/real/not-run/blocked boundary:
-- User acceptance:
+| Order/slice | Approved flow IDs | Approved page IDs | Real entry | Visible result | Persistence | Failure recovery |
+|---:|---|---|---|---|---|---|
+| 1 |  |  |  |  |  |  |
 
-## Remaining scope and blocks
+## Native implementation contract
+
+- Product Build Gate exits immediately after final approval.
+- Native Codex continues the ordered local/isolated implementation without repeating product approvals.
+- Every user-facing slice inherits the approved app shell, navigation, page responsibilities, and Design Lock.
+- Internal technical tracer bullets remain internal and cannot be presented as the intended product.
+- Browser/simulator verification records Local/Mock/Fake/real/not-run/blocked evidence.
+- Only a material baseline change reopens the smallest affected checkpoint.
+
+## External-action boundary
+
+- Authorized local/isolated actions:
+- Still requires separate explicit approval:
+- Production data:
+- Paid calls:
+- Deployment/publishing:
+- Real external writes or customer communication:
+
+## Remaining blocks
 
 -
 
 ## Change control
 
-- Small implementation-detail changes update this baseline without restarting unaffected gates.
-- Product contract, journey, design, or architecture changes reopen only the affected gates and downstream verification.
-- Native Codex must not silently change this approved baseline.
+Continue without reapproval for internal code structure, tests, migrations, task ordering, bug fixes, and already-required states that do not change product behavior, safety, cost, or scope.
+
+Reopen the smallest affected checkpoint for material changes to product scope/value, modules/pages/navigation/permissions, core journeys, locked design behavior, sensitive data, external integrations, recurring cost, production writes, deployment, or real customer communication.
 
 <!-- GATE:approved-baseline:START -->
 ## Final approval
 
-- [ ] This baseline reflects the latest accepted Product Contract.
-- [ ] This baseline agrees with the approved Experience Map and Design Lock.
-- [ ] This baseline agrees with the verified Vertical Slice.
-- [ ] Scope, acceptance criteria, integration boundaries, and blocks are explicit.
-- [ ] The user explicitly approved this baseline.
-- [ ] Product Build Gate will exit and native Codex will own implementation.
+- Approved artifact versions/hashes:
+- User approval wording/date:
+- Authorized environment:
+
+- [ ] This baseline reflects the latest accepted Product Contract and whole-product preview.
+- [ ] It agrees with the Experience Map, System Map, page responsibilities, and Design Lock.
+- [ ] Every implementation slice is traceable to approved flow and page IDs.
+- [ ] Scope, acceptance criteria, integration boundaries, and remaining blocks are explicit.
+- [ ] The user explicitly approved this baseline and authorized local/isolated implementation.
+- [ ] Product Build Gate exits; native Codex owns continuous implementation.
 <!-- GATE:approved-baseline:END -->

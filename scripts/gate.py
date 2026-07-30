@@ -13,6 +13,7 @@ from pathlib import Path
 SKILL_DIR = Path(__file__).resolve().parents[1]
 ASSET_DIR = SKILL_DIR / "assets"
 MAIN_FILE = Path("docs/PRODUCT_BUILD_GATE.md")
+SYSTEM_PREVIEW_FILE = Path("docs/SYSTEM_PREVIEW.md")
 DESIGN_FILE = Path("docs/DESIGN_LOCK.md")
 BASELINE_FILE = Path("docs/APPROVED_BUILD_BASELINE.md")
 
@@ -20,10 +21,10 @@ GATES = (
     "product-contract",
     "prior-art",
     "experience-map",
+    "system-preview",
     "visual-prototype",
     "design-lock",
     "build-blueprint",
-    "vertical-slice",
     "approved-baseline",
 )
 
@@ -123,9 +124,17 @@ def validate_project(project: Path, through: str) -> list[str]:
         return [str(exc)]
 
     through_index = GATES.index(through)
-    main_last = min(through_index, GATES.index("vertical-slice"))
+    main_last = min(through_index, GATES.index("build-blueprint"))
     for gate in GATES[: main_last + 1]:
         check_section(main_text, gate, f"Gate {gate}", failures)
+
+    if through_index >= GATES.index("system-preview"):
+        preview_path = project / SYSTEM_PREVIEW_FILE
+        try:
+            preview_text = read_required(preview_path)
+            check_full_checklist(preview_text, "System Preview", failures)
+        except GateError as exc:
+            failures.append(str(exc))
 
     if through_index >= GATES.index("design-lock"):
         design_path = project / DESIGN_FILE
@@ -177,12 +186,30 @@ def command_create_design_lock(args: argparse.Namespace) -> int:
     return 0
 
 
-def command_create_baseline(args: argparse.Namespace) -> int:
+def command_create_system_preview(args: argparse.Namespace) -> int:
     project = project_path(args.project)
-    failures = validate_project(project, "vertical-slice")
+    failures = validate_project(project, "experience-map")
     if failures:
         raise GateError(
-            "Cannot create Approved Build Baseline before prior gates pass:\n- "
+            "Cannot create System Preview before prior gates pass:\n- "
+            + "\n- ".join(failures)
+        )
+    main_text = read_required(project / MAIN_FILE)
+    target = project / SYSTEM_PREVIEW_FILE
+    write_new(
+        target,
+        render_asset("SYSTEM_PREVIEW.template.md", project_title(main_text)),
+    )
+    print(f"CREATED {target}")
+    return 0
+
+
+def command_create_baseline(args: argparse.Namespace) -> int:
+    project = project_path(args.project)
+    failures = validate_project(project, "design-lock")
+    if failures:
+        raise GateError(
+            "Cannot create Approved Build Baseline before product and design checkpoints pass:\n- "
             + "\n- ".join(failures)
         )
     main_text = read_required(project / MAIN_FILE)
@@ -210,6 +237,7 @@ def command_status(args: argparse.Namespace) -> int:
             print(f"MISSING {gate}")
 
     for label, relative in (
+        ("system-preview-file", SYSTEM_PREVIEW_FILE),
         ("design-lock-file", DESIGN_FILE),
         ("approved-baseline-file", BASELINE_FILE),
     ):
@@ -246,14 +274,21 @@ def parser() -> argparse.ArgumentParser:
 
     design_parser = subparsers.add_parser(
         "create-design-lock",
-        help="Create DESIGN_LOCK.md after Gates 0-3 pass",
+        help="Create DESIGN_LOCK.md after Gates 0-4 pass",
     )
     design_parser.add_argument("--project", required=True)
     design_parser.set_defaults(func=command_create_design_lock)
 
+    preview_parser = subparsers.add_parser(
+        "create-system-preview",
+        help="Create SYSTEM_PREVIEW.md after Gates 0-2 pass",
+    )
+    preview_parser.add_argument("--project", required=True)
+    preview_parser.set_defaults(func=command_create_system_preview)
+
     baseline_parser = subparsers.add_parser(
         "create-baseline",
-        help="Create APPROVED_BUILD_BASELINE.md after Gates 0-6 pass",
+        help="Create APPROVED_BUILD_BASELINE.md before final build authorization",
     )
     baseline_parser.add_argument("--project", required=True)
     baseline_parser.set_defaults(func=command_create_baseline)

@@ -8,6 +8,7 @@ created_at: "{{CREATED_AT}}"
 
 ## Approved direction
 
+- Approved system map/preview:
 - Direction:
 - Approval date/version:
 - Reference screenshots or prototype:
@@ -49,11 +50,10 @@ created_at: "{{CREATED_AT}}"
 
 ## Approval checklist
 
-- [ ] Approved direction and references are linked.
+- [ ] Approved system map/preview, direction, and references are linked.
 - [ ] Tokens and their usage rules are explicit.
 - [ ] Component and interaction states are explicit.
 - [ ] Responsive or device behavior is explicit.
 - [ ] Accessibility constraints are explicit.
 - [ ] Do/don't rules prevent visual drift.
 - [ ] The user explicitly approved this Design Lock.
-
