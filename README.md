@@ -1,55 +1,60 @@
 # Product Build Gate
 
-Product Build Gate is an explicit-only Codex Skill for new user-facing products, apps, websites, and games. It prevents full implementation from starting before the product contract, experience, visual direction, production blueprint, and first real end-to-end journey have been reviewed.
+Product Build Gate is an explicit-only Codex Skill for genuinely new user-facing products and major product/UX redesigns.
 
-> See it, operate it, approve it—then build it.
+> Confirm the whole product, lock the design, approve one build baseline—then build continuously.
 
 ## Why
 
-An apparently strong written plan can still become the wrong interface or the wrong product. Product Build Gate reduces that gap by requiring observable product decisions and rendered evidence before implementation expands.
-
-It is not a persistent router, autonomous loop, or project manager. It exits after producing an Approved Build Baseline, and native Codex then owns implementation.
+A strong written proposal can still become the wrong interface or workflow. Product Build Gate makes the whole product visible before production implementation, but exits as soon as the approved build baseline is ready. It is not a persistent router, sprint process, or implementation manager.
 
 ## Workflow
 
-1. Product Contract
-2. Bounded Prior Art and capability scan
-3. Experience Map
-4. Exactly three comparable visual prototypes
-5. Design Lock
-6. Build Blueprint
-7. Verified Vertical Slice
-8. Approved Build Baseline
+Internal preparation:
 
-The user explicitly approves the Product Contract, Design Lock, and final Vertical Slice/Baseline.
+1. Product Contract
+2. Conditional Prior Art/capability scan
+3. Experience Map
+4. System-wide page/function map and browsable Mock/Fake preview
+5. Conditional visual-target comparison
+6. Design Lock
+7. Build Blueprint and Approved Build Baseline
+
+Only three user approvals are required:
+
+1. Product + whole-product preview
+2. Design Lock
+3. Approved Build Baseline + authorization to begin local/isolated development
+
+After the third approval, Product Build Gate exits. Native Codex implements continuously from the locked baseline. The first Vertical Slice is an implementation milestone, not another Product Build Gate.
+
+## Efficiency rules
+
+- Existing complete source documents are extracted and reconciled; the user does not restate them.
+- Prior Art runs only for a named decision-changing evidence gap.
+- A clear existing visual target needs one faithful direction, not three artificial alternatives.
+- Internal architecture, tests, migrations, TODO ordering, and bug fixes do not require user reapproval.
+- Only material changes to product scope, modules/pages/navigation, core journeys, locked design, sensitive data, integrations, cost, production writes, deployment, or real customer communication reopen the smallest affected checkpoint.
+- Technical tracer bullets remain internal and cannot replace the approved app shell or real user entry.
 
 ## Install
 
+Keep the repository checkout as the editable source of truth, validate it there, then install a derived runtime copy:
+
 ```bash
-PBG_SKILLS_DIR="${CODEX_HOME:-$HOME/.codex}/skills"
-mkdir -p "$PBG_SKILLS_DIR"
-git clone https://github.com/wjbbeyond/product-build-gate.git \
-  "$PBG_SKILLS_DIR/product-build-gate"
+PBG_SOURCE_DIR="/Users/your-name/Documents/CODING/Skills/product-build-gate"
+
+python3 /path/to/skill-creator/scripts/quick_validate.py "$PBG_SOURCE_DIR"
+
+PBG_RUNTIME_DIR="${CODEX_HOME:-$HOME/.codex}/skills/product-build-gate"
+mkdir -p "$(dirname "$PBG_RUNTIME_DIR")"
+rsync -a --delete --exclude=.git --exclude=__pycache__ \
+  "$PBG_SOURCE_DIR/" "$PBG_RUNTIME_DIR/"
 ```
 
-Start a new Codex conversation after installation so the Skill list is refreshed.
+Do not edit only the runtime copy. Start a new Codex task after installation so the Skill catalog is refreshed.
 
 ## Invoke
-
-Product Build Gate is explicit-only. You only need to remember the first invocation. After that, Codex guides every transition with a short menu.
-
-Call it by exact name for a genuinely new user-facing product or a major product/UX redesign:
-
-```text
-$product-build-gate
-
-Here is my product proposal:
-[paste the proposal]
-
-Start Product Build Gate. Complete the Product Contract first and wait for my approval before continuing.
-```
-
-Chinese example:
 
 ```text
 $product-build-gate
@@ -57,48 +62,32 @@ $product-build-gate
 这是我的新项目方案：
 [粘贴完整方案]
 
-请启动 Product Build Gate，先完成 Product Contract，等待我确认后再继续。
+请在开发前让我确认整个产品、页面和流程；确认开发基线后直接开始开发。
 ```
 
-At the end of every Gate, Codex asks:
-
-```text
-请选择：
-1. 修改当前内容
-2. 确认当前 Gate，并进入下一步
-3. 暂停并保存进度
-
-可直接回复数字，也可以直接写修改意见。
-```
-
-Reply `1` with feedback, `2` to approve the named Gate and continue, or `3` to pause. At the visual-prototype Gate, reply with the selected direction as well, for example `2，选择 B`.
-
-Do not invoke this Skill for routine feature work, bug fixes, status checks, provider selection, implementation continuation, headless services, libraries, or pure CLI tools.
+Do not invoke this Skill for implementation continuation, routine feature work, bug fixes, status checks, provider selection, headless services, libraries, or pure CLI tools.
 
 ## Project artifacts
 
-The workflow maintains three durable project documents:
-
-- `docs/PRODUCT_BUILD_GATE.md` — gate decisions, evidence, and approval state
+- `docs/PRODUCT_BUILD_GATE.md` — preparation, evidence, checkpoint approval, and reopen record
+- `docs/SYSTEM_PREVIEW.md` — whole-product module/page/permission/flow coverage and rendered evidence
 - `docs/DESIGN_LOCK.md` — approved visual and interaction contract
-- `docs/APPROVED_BUILD_BASELINE.md` — final handoff to native Codex
+- `docs/APPROVED_BUILD_BASELINE.md` — single pre-build handoff to native Codex
 
-The included helper creates and structurally validates these artifacts:
+The helper creates and structurally validates these artifacts:
 
 ```bash
 python3 scripts/gate.py --help
 ```
 
-Structural validation verifies required files and checklists. It does not replace real rendered evidence, product judgment, or user approval.
+Structural validation does not replace rendered verification or product judgment.
 
-## Safety and scope
+## Safety
 
-- No automatic Skill or plugin installation
-- No automatic LeanSkill rerouting
-- No deployment, publishing, paid calls, production data, or external mutation without authority
-- At most one primary and two specialist Skills per stage
-- Real browser or simulator verification before product approval
-- Explicit separation of local, Mock/Fake, real integration, not-run, and blocked results
+- No substantial production implementation before Design Lock and build authorization
+- No automatic Skill/plugin installation or LeanSkill rerouting
+- No deployment, paid calls, production data, real external writes, or real customer communication without explicit authority
+- Local, Mock/Fake, real integration, not-run, and blocked evidence remain distinct
 
 ## Requirements
 

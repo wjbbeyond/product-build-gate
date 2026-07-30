@@ -1,34 +1,35 @@
 ---
-product_build_gate_version: 1
+product_build_gate_version: 3
 project_title: "{{PROJECT_TITLE}}"
 created_at: "{{CREATED_AT}}"
 ---
 
 # Product Build Gate — {{PROJECT_TITLE}}
 
-This document is the product decision record. It is not a general task log.
+This is a pre-build product decision record, not a sprint log or implementation task tracker.
 
-## Gate receipt
+## Current receipt
 
-- Current gate:
+- Current stage:
 - Produced artifact:
 - Verification evidence:
 - User decision required:
 
-## Guided next action
+## Approval checkpoints
 
-Codex must end the current Gate with:
+Only three user approvals are required:
 
-```text
-请选择：
-1. 修改当前内容
-2. 确认当前 Gate，并进入下一步
-3. 暂停并保存进度
+1. Product Contract + Experience Map + System Map + whole-product preview.
+2. Design Lock.
+3. Approved Build Baseline and authorization to begin local/isolated implementation.
 
-可直接回复数字，也可以直接写修改意见。
-```
+Internal stages advance without an approval menu when their evidence is complete.
 
-For Gate 3, option 2 must also name the selected direction: A, B, or C. A reply of `2` approves only the named Gate shown with this menu. An unclear reply is not approval.
+## Reopen and change log
+
+| Date/version | Material reason | Checkpoint reopened | Preserved evidence | New approval |
+|---|---|---|---|---|
+|  |  |  |  |  |
 
 <!-- GATE:product-contract:START -->
 ## Gate 0 — Product Contract
@@ -38,52 +39,45 @@ For Gate 3, option 2 must also name the selected direction: A, B, or C. A reply 
 - Primary user and context:
 - Problem:
 - Observable value:
-- Anchor journey:
+- Main business journey:
 - In scope:
 - Out of scope:
-- Open decisions or blockers:
-- Approved version/date:
+- Material contradictions or blockers:
 
 ### Completion
 
 - [ ] One primary user and operating context are explicit.
 - [ ] The problem and observable product value are explicit.
-- [ ] One anchor journey is defined end to end.
+- [ ] The main business journey is defined end to end.
 - [ ] In-scope and out-of-scope boundaries are explicit.
-- [ ] Contradictions and material open decisions are resolved or blocked.
-- [ ] The user explicitly approved this Product Contract.
+- [ ] Material contradictions are resolved or made visible for the combined product checkpoint.
 <!-- GATE:product-contract:END -->
 
 <!-- GATE:prior-art:START -->
 ## Gate 1 — Prior Art and capability scan
 
-### Search questions
+### Decision
 
--
+- Status: `RUN` / `SKIPPED — no decision-changing evidence gap`
+- Material question or risk:
 
-### Candidate decisions
-
-| Candidate | Evidence | Fit and gaps | License/security/maintenance/integration | Decision |
+| Candidate | Direct evidence | Fit/gap | Cost/security/maintenance | Decision |
 |---|---|---|---|---|
 |  |  |  |  | adopt / adapt / reference / reject |
 
 ### Completion
 
-- [ ] Search questions are tied to material risks.
-- [ ] No more than three product/repository references were compared.
-- [ ] No more than two external Skill/plugin candidates were compared.
-- [ ] Every candidate has direct evidence and a recorded decision.
-- [ ] No new Skill/plugin was installed without explicit user approval.
+- [ ] A material evidence gap is named, or the scan is explicitly skipped.
+- [ ] If run, limits and evidence requirements were respected.
+- [ ] No Skill/plugin was installed without explicit user approval.
 <!-- GATE:prior-art:END -->
 
 <!-- GATE:experience-map:START -->
 ## Gate 2 — Experience Map
 
-### Anchor journey
+### Main journey
 
-`entry → action → visible result → persisted result → failure recovery`
-
-### Screen and state map
+`real entry → user action → visible result → persisted result → failure recovery`
 
 | Screen/state | Entry condition | User action | Visible result | Persistence | Recovery |
 |---|---|---|---|---|---|
@@ -91,104 +85,115 @@ For Gate 3, option 2 must also name the selected direction: A, B, or C. A reply 
 
 ### Completion
 
-- [ ] The anchor journey includes entry, action, result, persistence, and recovery.
+- [ ] The journey begins at the approved real user entry.
 - [ ] Navigation, prerequisites, and permissions are explicit.
-- [ ] Empty, loading, success, and error states are defined where applicable.
+- [ ] Required empty, loading, success, and error states are defined.
 - [ ] Each step has a user-observable success criterion.
 <!-- GATE:experience-map:END -->
 
-<!-- GATE:visual-prototype:START -->
-## Gate 3 — Visual Prototype
+<!-- GATE:system-preview:START -->
+## Gate 3 — System Map and whole-product preview
 
-### Shared comparison brief
+See `docs/SYSTEM_PREVIEW.md`.
 
-- Content:
-- Core actions:
-- Target viewport/device:
-- Required states:
+### Coverage receipt
 
-### Directions
-
-| Direction | Meaningful design difference | Prototype/evidence | User feedback |
-|---|---|---|---|
-| A |  |  |  |
-| B |  |  |  |
-| C |  |  |  |
+- Source documents:
+- Functional modules:
+- Representative pages:
+- Roles/permissions:
+- Core flows:
+- Cross-page dependencies:
+- Browsable preview:
+- Browser/simulator evidence:
+- Local/Mock/real/not-run/blocked boundary:
+- Approved artifact versions/hashes:
+- Product checkpoint approval/date:
 
 ### Completion
 
-- [ ] Exactly three genuinely different directions use the same comparison brief.
-- [ ] The anchor journey is clickable in every direction.
-- [ ] Required states are rendered.
-- [ ] Desktop/mobile or target-device evidence was inspected.
-- [ ] The user selected, combined, or rejected directions and feedback is recorded.
+- [ ] Every key module has at least one representative page preview.
+- [ ] Stable page IDs map modules, pages, permissions, flows, states, and dependencies.
+- [ ] The real entry and whole planned product are understandable.
+- [ ] Gaps, assumptions, deferred scope, and prohibited actions are explicit.
+- [ ] The browsable Mock/Fake preview was inspected in a real browser or simulator.
+- [ ] Product Contract, Experience Map, System Map, and preview agree.
+- [ ] The user explicitly approved the combined product and whole-product preview checkpoint.
+<!-- GATE:system-preview:END -->
+
+<!-- GATE:visual-prototype:START -->
+## Gate 4 — Visual target resolution
+
+### Decision
+
+- Status: `EXISTING TARGET` / `COMPARISON REQUIRED`
+- Existing target/reference:
+- Comparison count and reason:
+- Rendered evidence:
+- Direction carried into Design Lock:
+
+### Completion
+
+- [ ] A clear existing target was faithfully rendered, or the smallest useful comparison set was inspected.
+- [ ] Compared directions use the same content, actions, viewport, and states.
+- [ ] No alternatives were created solely to satisfy a quota.
 <!-- GATE:visual-prototype:END -->
 
 <!-- GATE:design-lock:START -->
-## Gate 4 — Design Lock
+## Gate 5 — Design Lock
 
 See `docs/DESIGN_LOCK.md`.
 
+### Receipt
+
+- Approved artifact version/hash:
+- Browser/simulator evidence:
+- Approval/date:
+
 ### Completion
 
-- [ ] The selected direction and approved references are recorded.
+- [ ] Approved references and rendered evidence are recorded.
 - [ ] Tokens, component states, responsive behavior, and interaction rules are explicit.
 - [ ] Accessibility and do/don't constraints are explicit.
 - [ ] The user explicitly approved the Design Lock.
 <!-- GATE:design-lock:END -->
 
 <!-- GATE:build-blueprint:START -->
-## Gate 5 — Build Blueprint
+## Gate 6 — Build Blueprint and Approved Build Baseline
 
 ### Decisions
 
 - Minimum stack and architecture:
-- Reuse/adopt/build decisions:
+- Reuse/adopt/build:
 - Data and persistence:
-- APIs and external integrations:
-- Authentication, privacy, and security:
-- Cost and usage limits:
+- APIs and integrations:
+- Authentication, privacy, security, and Secrets:
+- Cost and external-action limits:
 - Real versus Mock/Fake boundaries:
 - Test strategy:
 - Non-goals:
 
-### Tracer-bullet TODO
+### Implementation traceability
 
-| Order | Deliverable | Observable acceptance | Verification |
-|---:|---|---|---|
-| 1 |  |  |  |
+| Order/slice | Approved flow IDs | Approved page IDs | Real entry | Visible result | Persistence | Failure recovery |
+|---:|---|---|---|---|---|---|
+| 1 |  |  |  |  |  |  |
+
+### Build authorization receipt
+
+- Approved Build Baseline: `docs/APPROVED_BUILD_BASELINE.md`
+- Approved version/hash:
+- User authorization/date:
+- Authorized environment:
+- External actions still blocked:
 
 ### Completion
 
-- [ ] Architecture follows the accepted journey and Design Lock.
-- [ ] Data, integration, privacy, security, and cost boundaries are explicit.
-- [ ] Real and Mock/Fake paths are distinguished.
-- [ ] TODOs are ordered and have observable acceptance criteria.
-- [ ] Speculative infrastructure and unrelated expansion are excluded.
+- [ ] Architecture and slices implement the accepted journey and Design Lock.
+- [ ] Data, integration, privacy, security, Secret, cost, and external-action boundaries are explicit.
+- [ ] Every user-facing slice maps to approved flow/page IDs and a real entry.
+- [ ] Technical tracer bullets are internal and cannot replace approved product UI.
+- [ ] TODOs are ordered with observable acceptance and proportional verification.
+- [ ] The Approved Build Baseline consolidates the latest accepted decisions.
+- [ ] The user explicitly approved the baseline and authorized local/isolated implementation.
 <!-- GATE:build-blueprint:END -->
-
-<!-- GATE:vertical-slice:START -->
-## Gate 6 — Vertical Slice
-
-### Evidence
-
-- Real entry:
-- User action:
-- Visible result:
-- Persistence:
-- Failure and recovery:
-- Browser/simulator evidence:
-- Console/runtime result:
-- Local/Mock/real/not-run/blocked boundary:
-- User acceptance/date:
-
-### Completion
-
-- [ ] The real entry point and anchor action work.
-- [ ] The approved visible result appears.
-- [ ] Required persistence survives reload/reopen.
-- [ ] A realistic failure is understandable and recoverable.
-- [ ] The journey was verified in a real browser or simulator.
-- [ ] Integration boundaries and blocked items are explicit.
-- [ ] The user accepted the slice as representative of the intended product.
-<!-- GATE:vertical-slice:END -->
