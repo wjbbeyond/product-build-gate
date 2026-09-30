@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from datetime import datetime, timezone
@@ -38,6 +39,8 @@ def project_path(raw: str) -> Path:
         raise GateError(f"Project directory does not exist: {project}")
     if project in {Path("/").resolve(), Path.home().resolve()}:
         raise GateError(f"Refusing broad project target: {project}")
+    if not (project / "docs").resolve().is_relative_to(project):
+        raise GateError("Project docs directory must remain inside the project")
     return project
 
 
@@ -46,11 +49,14 @@ def now_iso() -> str:
 
 
 def render_asset(name: str, title: str) -> str:
+    if not title.strip() or any(ord(char) < 32 for char in title):
+        raise GateError("Project title must be nonempty and contain no control characters")
     template_path = ASSET_DIR / name
     if not template_path.is_file():
         raise GateError(f"Missing Skill asset: {template_path}")
     return (
         template_path.read_text(encoding="utf-8")
+        .replace('"{{PROJECT_TITLE}}"', json.dumps(title, ensure_ascii=False))
         .replace("{{PROJECT_TITLE}}", title)
         .replace("{{CREATED_AT}}", now_iso())
     )
@@ -72,16 +78,22 @@ def read_required(path: Path) -> str:
 
 
 def project_title(main_text: str) -> str:
-    match = re.search(r'^project_title:\s*"([^"]+)"\s*$', main_text, re.MULTILINE)
+    match = re.search(r'^project_title:[ \t]*("(?:\\.|[^"\\\n])*")[ \t]*$', main_text, re.MULTILINE)
     if not match:
         raise GateError("Cannot read project_title from PRODUCT_BUILD_GATE.md")
-    return match.group(1)
+    try:
+        title = json.loads(match.group(1))
+    except ValueError as exc:
+        raise GateError("Invalid project_title string") from exc
+    if not title.strip() or any(ord(char) < 32 for char in title):
+        raise GateError("Invalid project_title string")
+    return title
 
 
 def marked_section(text: str, gate: str) -> str:
     start = f"<!-- GATE:{gate}:START -->"
     end = f"<!-- GATE:{gate}:END -->"
-    if start not in text or end not in text:
+    if text.count(start) != 1 or text.count(end) != 1 or text.index(start) >= text.index(end):
         raise GateError(f"Missing structural markers for gate: {gate}")
     return text.split(start, 1)[1].split(end, 1)[0]
 
